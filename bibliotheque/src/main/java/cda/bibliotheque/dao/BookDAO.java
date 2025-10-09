@@ -19,7 +19,7 @@ public class BookDAO {
 
     public List<Book> getAllBooks(){
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT id, title, release_date, isAvailable FROM book;";
+        String sql = "SELECT id, title, release_date, isAvailable FROM books;";
         try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while(rs.next()){
                 books.add(new Book(
@@ -36,7 +36,7 @@ public class BookDAO {
     }
 
     public void addBook(Book book){
-        String sql = "INSERT INTO book(title, release_date, isAvailable) VALUES (?,?,?)";
+        String sql = "INSERT INTO books(title, release_date, isAvailable) VALUES (?,?,?)";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
             pstmt.setDate(2, book.getReleaseDate());
@@ -49,7 +49,7 @@ public class BookDAO {
     }
 
     public void updateBook(Book book){
-        String sql = "UPDATE book SET title = ?, release_date = ?, isAvailable = ? WHERE id = ?";
+        String sql = "UPDATE books SET title = ?, release_date = ?, isAvailable = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
             pstmt.setDate(2, book.getReleaseDate());
@@ -67,7 +67,7 @@ public class BookDAO {
     }
 
     public void deleteBook(int id){
-        String sql = "DELETE FROM book WHERE id = ?";
+        String sql = "DELETE FROM books WHERE id = ?";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             int rows = pstmt.executeUpdate();

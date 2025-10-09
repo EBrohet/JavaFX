@@ -1,6 +1,5 @@
 package cda.bibliotheque.model;
 
-import java.time.LocalDate;
 import java.sql.Date;
 
 public class Book {
@@ -35,7 +34,7 @@ public class Book {
         return isAvailable;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
