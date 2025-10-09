@@ -32,4 +32,9 @@ public class CreateAuthorController {
         authorDAO.addAuthor(author);
         App.setRoot("authors");
     }
+
+    @FXML
+    private void switchToAuthors() throws IOException{
+        App.setRoot("authors");
+    }
 }

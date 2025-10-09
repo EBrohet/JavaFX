@@ -26,7 +26,7 @@ public class BookDAO {
                     rs.getInt("id"),
                     rs.getString("title"),
                     rs.getDate("release_date"),
-                    rs.getShort("isAvailable")
+                    rs.getBoolean("isAvailable")
                 ));
             }
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class BookDAO {
         try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
             pstmt.setDate(2, book.getReleaseDate());
-            pstmt.setShort(3, book.getIsAvailable());
+            pstmt.setBoolean(3, book.getIsAvailable());
             pstmt.executeUpdate();
             System.out.println("Ajout du livre effectué");
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class BookDAO {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
             pstmt.setDate(2, book.getReleaseDate());
-            pstmt.setShort(3, book.getIsAvailable());
+            pstmt.setBoolean(3, book.getIsAvailable());
             pstmt.setInt(4, book.getId());
             int rows = pstmt.executeUpdate();
             if (rows > 0) {

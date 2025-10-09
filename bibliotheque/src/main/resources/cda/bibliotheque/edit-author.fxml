@@ -16,5 +16,6 @@
       <DatePicker fx:id="inputBornDate" layoutX="48.0" layoutY="251.0" prefHeight="25.0" prefWidth="517.0" />
       <Button layoutX="49.0" layoutY="303.0" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="517.0" text="Enregistrer" />
       <Label layoutX="241.0" layoutY="40.0" text="Modification d'un auteur" />
+      <Button layoutX="34.0" layoutY="28.0" mnemonicParsing="false" onAction="#switchToAuthors" text="Retour" />
    </children>
 </Pane>

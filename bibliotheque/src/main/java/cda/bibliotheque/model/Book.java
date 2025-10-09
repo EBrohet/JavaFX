@@ -1,17 +1,20 @@
 package cda.bibliotheque.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Book {
     private int id;
     private String title;
     private Date release_date;
-    private short isAvailable;
+    private boolean isAvailable;
+    private List<Author> authors = new ArrayList<>();
 
     public Book() {
     }
 
-    public Book(int id, String title, Date release_date, short isAvailable) {
+    public Book(int id, String title, Date release_date, boolean isAvailable) {
         this.id = id;
         this.title = title;
         this.release_date = release_date;
@@ -30,7 +33,7 @@ public class Book {
         return release_date;
     }
 
-    public short getIsAvailable() {
+    public boolean getIsAvailable() {
         return isAvailable;
     }
 
@@ -42,7 +45,15 @@ public class Book {
         this.release_date = release_date;
     }
 
-    public void setIsAvailable(short isAvailable) {
+    public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
+    }
+
+    public String toStringAuthors() {
+        String authorString = "";
+        for(Author a : authors) {
+            authorString = authorString + a.toString();
+        }
+        return authorString;
     }
 }

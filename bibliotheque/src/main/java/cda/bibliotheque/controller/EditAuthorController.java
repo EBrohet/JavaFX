@@ -54,4 +54,9 @@ public class EditAuthorController {
     public void setAuthor(Author author) {
         this.author.set(author);
     }
+
+    @FXML
+    private void switchToAuthors() throws IOException{
+        App.setRoot("authors");
+    }
 }

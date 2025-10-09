@@ -102,4 +102,9 @@ public class AuthorController {
     private void switchToCreate() throws IOException{
         App.setRoot("create-author");
     }
+
+    @FXML
+    private void switchToMain() throws IOException{
+        App.setRoot("primary");
+    }
 }

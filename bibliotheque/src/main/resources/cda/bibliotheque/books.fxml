@@ -13,6 +13,7 @@
         <columns>
           <TableColumn fx:id="colTitle" editable="false" prefWidth="75.0" text="Titre" />
           <TableColumn fx:id="colReleaseDate" prefWidth="75.0" text="Date de sortie" />
+            <TableColumn fx:id="colAuthors" prefWidth="75.0" text="Auteurs" />
             <TableColumn fx:id="colIsAvailable" prefWidth="75.0" text="Disponibilité" />
             <TableColumn fx:id="colActions" prefWidth="75.0" text="Actions" />
         </columns>
@@ -21,5 +22,6 @@
          </columnResizePolicy>
       </TableView>
       <Button layoutX="524.0" layoutY="16.0" mnemonicParsing="false" onAction="#switchToCreate" text="Ajouter" />
+      <Button layoutX="25.0" layoutY="16.0" mnemonicParsing="false" onAction="#switchToMain" text="Retour" />
    </children>
 </Pane>

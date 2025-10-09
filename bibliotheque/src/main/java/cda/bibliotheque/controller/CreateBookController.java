@@ -9,13 +9,14 @@ import cda.bibliotheque.model.Book;
 import cda.bibliotheque.dao.BookDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class CreateBookController {
 
     @FXML
-    private TextField inputIsAvailable;
+    private CheckBox inputIsAvailable;
 
     @FXML
     private DatePicker inputReleaseDate;
@@ -28,7 +29,7 @@ public class CreateBookController {
     @FXML
     void submit(ActionEvent event) throws IOException {
         Book book = new Book();
-        book.setIsAvailable(Short.parseShort(inputIsAvailable.getText()));
+        book.setIsAvailable(inputIsAvailable.isSelected());
         LocalDate inputRD = inputReleaseDate.getValue();
         if (inputRD != null) {
             Date sqlDate = Date.valueOf(inputRD);
@@ -36,6 +37,11 @@ public class CreateBookController {
         }
         book.setTitle(inputTitle.getText());
         bookDAO.addBook(book);
+        App.setRoot("books");
+    }
+
+    @FXML
+    private void switchToBooks() throws IOException{
         App.setRoot("books");
     }
 }

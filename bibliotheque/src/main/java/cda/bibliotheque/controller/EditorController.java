@@ -2,11 +2,10 @@ package cda.bibliotheque.controller;
 
 import java.io.IOException;
 
-import cda.bibliotheque.model.Book;
-import cda.bibliotheque.dao.BookDAO;
+import cda.bibliotheque.model.Editor;
+import cda.bibliotheque.dao.EditorDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,40 +14,33 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import cda.bibliotheque.App;
 
+import java.time.LocalDate;
 import java.sql.Date;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-public class BookController {
+public class EditorController {
     @FXML
-    private TableView<Book> booksTable;
+    private TableView<Editor> editorsTable;
 
     @FXML
-    private TableColumn<Book, Boolean> colIsAvailable;
+    private TableColumn<Editor, LocalDate> colCreatedAt;
 
     @FXML
-    private TableColumn<Book, String> colAuthors;
+    private TableColumn<Editor, String> colLabel;
 
     @FXML
-    private TableColumn<Book, Date> colReleaseDate;
+    private TableColumn<Editor, Void> colActions;
 
-    @FXML
-    private TableColumn<Book, String> colTitle;
-
-    @FXML
-    private TableColumn<Book, Void> colActions;
-
-    private final ObservableList<Book> bookList = FXCollections.observableArrayList();
-    private final BookDAO bookDAO = new BookDAO();
+    private final ObservableList<Editor> editorList = FXCollections.observableArrayList();
+    private final EditorDAO editorDAO = new EditorDAO();
 
     @FXML
     public void initialize(){
-        colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
-        colReleaseDate.setCellValueFactory(cell -> new SimpleObjectProperty<Date>(cell.getValue().getReleaseDate()));
-        colIsAvailable.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().getIsAvailable()));
-        colAuthors.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().toStringAuthors()));
+        colLabel.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getLabel()));
+        colCreatedAt.setCellValueFactory(cell -> new SimpleObjectProperty<LocalDate>(cell.getValue().getCreated_at()));
 
         colActions.setCellFactory(cell -> new TableCell<>(){
             private final Button buttonEdit = new Button("Modifier");
@@ -57,13 +49,13 @@ public class BookController {
             {
                 buttonEdit.setOnAction(event -> {
                     int index = getIndex();
-                    Book bookToEdit = booksTable.getItems().get(index);
+                    Editor editorToEdit = editorsTable.getItems().get(index);
                     try {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("edit-book.fxml"));
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("edit-editor.fxml"));
                         Parent parent = loader.load();
 
-                        EditBookController editBookController = loader.getController();
-                        editBookController.setBook(bookToEdit);
+                        EditEditorController editEditorController = loader.getController();
+                        editEditorController.setEditor(editorToEdit);
 
                         App.getScene().setRoot(parent);
                     } catch (IOException e) {
@@ -72,9 +64,9 @@ public class BookController {
                 });
                 buttonDelete.setOnAction(event -> {
                     int index = getIndex();
-                    Book bookToDelete = booksTable.getItems().get(index);
-                    bookDAO.deleteBook(bookToDelete.getId());
-                    loadBooks();
+                    Editor editorToDelete = editorsTable.getItems().get(index);
+                    editorDAO.deleteEditor(editorToDelete.getId());
+                    loadEditors();
                 });
             }
 
@@ -89,17 +81,17 @@ public class BookController {
             }
         });
 
-        loadBooks();
+        loadEditors();
     }
 
-    private void loadBooks(){
-        bookList.setAll(bookDAO.getAllBooks());
-        booksTable.setItems(bookList);
+    private void loadEditors(){
+        editorList.setAll(editorDAO.getAllEditors());
+        editorsTable.setItems(editorList);
     }
 
     @FXML
     private void switchToCreate() throws IOException{
-        App.setRoot("create-book");
+        App.setRoot("create-editor");
     }
 
     @FXML
