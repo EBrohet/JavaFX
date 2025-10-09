@@ -1,6 +1,8 @@
 package cda.bibliotheque.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import cda.bibliotheque.App;
 import cda.bibliotheque.model.Book;
@@ -26,8 +28,12 @@ public class CreateBookController {
     @FXML
     void submit(ActionEvent event) throws IOException {
         Book book = new Book();
-        book.setIsAvailable(inputIsAvailable.getText());
-        book.setReleaseDate(inputReleaseDate.getValue());
+        book.setIsAvailable(Short.parseShort(inputIsAvailable.getText()));
+        LocalDate inputRD = inputReleaseDate.getValue();
+        if (inputRD != null) {
+            Date sqlDate = Date.valueOf(inputRD);
+            book.setReleaseDate(sqlDate);
+        }
         book.setTitle(inputTitle.getText());
         bookDAO.addBook(book);
         App.setRoot("books");

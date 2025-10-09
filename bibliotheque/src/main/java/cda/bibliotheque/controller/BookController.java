@@ -5,8 +5,7 @@ import java.io.IOException;
 import cda.bibliotheque.model.Book;
 import cda.bibliotheque.dao.BookDAO;
 import javafx.beans.property.SimpleStringProperty;
-// import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleShortProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,8 +15,6 @@ import javafx.scene.control.TableView;
 import cda.bibliotheque.App;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
@@ -45,8 +42,8 @@ public class BookController {
     @FXML
     public void initialize(){
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
-        colReleaseDate.setCellValueFactory(cell -> new SimpleDateFormat(cell.getValue().getReleaseDate()));
-        colIsAvailable.setCellValueFactory(cell -> new SimpleShortProperty(cell.getValue().getIsAvailable());
+        colReleaseDate.setCellValueFactory(cell -> new SimpleObjectProperty<Date>(cell.getValue().getReleaseDate()));
+        colIsAvailable.setCellValueFactory(cell -> new SimpleObjectProperty<Short>(cell.getValue().getIsAvailable()));
 
         colActions.setCellFactory(cell -> new TableCell<>(){
             private final Button buttonEdit = new Button("Modifier");

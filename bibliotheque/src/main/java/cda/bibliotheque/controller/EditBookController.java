@@ -2,6 +2,9 @@ package cda.bibliotheque.controller;
 
 import java.io.IOException;
 
+import java.time.ZoneId;
+import java.time.LocalDate;
+import java.sql.Date;
 import cda.bibliotheque.App;
 import cda.bibliotheque.dao.BookDAO;
 import cda.bibliotheque.model.Book;
@@ -28,8 +31,13 @@ public class EditBookController {
     @FXML
     void submit(ActionEvent event) throws IOException {
         Book newBook = book.get();
-        newBook.setIsAvailable(inputIsAvailable.getText());
-        newBook.setReleaeDate(inputReleaseDate.getValue());
+        newBook.setIsAvailable(Short.parseShort(inputIsAvailable.getText()));
+        LocalDate inputRD = inputReleaseDate.getValue();
+        if (inputRD != null) {
+            Date sqlDate = Date.valueOf(inputRD);
+            newBook.setReleaseDate(sqlDate);
+        }
+        // newBook.setReleaseDate(Date.from(inputRD.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         newBook.setTitle(inputTitle.getText());
         bookDAO.updateBook(newBook);
         App.setRoot("books");
@@ -39,8 +47,9 @@ public class EditBookController {
     public void initialize(){
         book.addListener((obs, oldBook, newBook) -> {
             if (newBook != null) {
-                inputIsAvailable.setText(newBook.getIsAvailable());
-                inputReleaseDate.setValue(newBook.getReleaseDate());
+                inputIsAvailable.setText(Short.toString(newBook.getIsAvailable()));
+                Date inputRD = newBook.getReleaseDate();
+                inputReleaseDate.setValue(inputRD.toLocalDate());
                 inputTitle.setText(newBook.getTitle());
             }
         });
