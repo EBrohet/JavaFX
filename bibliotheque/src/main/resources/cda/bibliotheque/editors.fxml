@@ -9,7 +9,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.AuthorController">
    <children>
       <Label alignment="CENTER" layoutX="273.0" layoutY="14.0" prefHeight="29.0" prefWidth="54.0" text="Editeurs" />
-      <TableView fx:id="authorsTable" layoutX="5.0" layoutY="50.0" prefHeight="350.0" prefWidth="591.0">
+      <TableView fx:id="editorsTable" layoutX="5.0" layoutY="50.0" prefHeight="350.0" prefWidth="591.0">
         <columns>
           <TableColumn fx:id="colLabel" editable="false" prefWidth="75.0" text="Label" />
             <TableColumn fx:id="colCreatedAt" prefWidth="75.0" text="Date de création" />

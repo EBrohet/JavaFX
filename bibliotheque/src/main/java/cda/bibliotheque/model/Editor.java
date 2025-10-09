@@ -2,11 +2,14 @@ package cda.bibliotheque.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Editor {
     private int id;
     private String label;
     private LocalDate created_at;
+    private List<Book> booksDistribute = new ArrayList<>();
 
     public Editor() {
     }

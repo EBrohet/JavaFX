@@ -52,7 +52,7 @@ public class Book {
     public String toStringAuthors() {
         String authorString = "";
         for(Author a : authors) {
-            authorString = authorString + a.toString();
+            authorString = authorString + a.toString() + "\n";
         }
         return authorString;
     }
