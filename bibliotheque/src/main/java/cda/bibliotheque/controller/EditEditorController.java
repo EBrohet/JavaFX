@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public class EditEditorController {
     private final ObjectProperty<Editor> editor = new SimpleObjectProperty<>();
-    private final EditorDAO authorDAO = new EditorDAO();
+    private final EditorDAO editorDAO = new EditorDAO();
 
     @FXML
     private DatePicker inputCreatedAt;
@@ -27,7 +27,7 @@ public class EditEditorController {
         Editor newEditor = editor.get();
         newEditor.setCreated_at(inputCreatedAt.getValue());
         newEditor.setLabel(inputLabel.getText());
-        authorDAO.updateEditor(newEditor);
+        editorDAO.updateEditor(newEditor);
         App.setRoot("editors");
     }
 
