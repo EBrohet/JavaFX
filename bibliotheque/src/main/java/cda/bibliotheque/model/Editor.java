@@ -49,5 +49,10 @@ public class Editor {
     public void setCreated_at(LocalDate created_at) {
         this.created_at = created_at;
     }
+
+    @Override
+    public String toString(){
+        return this.label;
+    }
 }
 

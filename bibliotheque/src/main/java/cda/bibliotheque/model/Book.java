@@ -10,6 +10,7 @@ public class Book {
     private Date release_date;
     private boolean isAvailable;
     private List<Author> authors = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<>();
 
     public Book() {
     }
@@ -19,6 +20,15 @@ public class Book {
         this.title = title;
         this.release_date = release_date;
         this.isAvailable = isAvailable;
+    }
+
+    public Book(int id, String title, Date release_date, boolean isAvailable, List<Author> authors, List<Genre> genres) {
+        this.id = id;
+        this.title = title;
+        this.release_date = release_date;
+        this.isAvailable = isAvailable;
+        this.authors = authors;
+        this.genres = genres;
     }
 
     public int getId() {
@@ -55,5 +65,18 @@ public class Book {
             authorString = authorString + a.toString() + "\n";
         }
         return authorString;
+    }
+
+    public String toStringGenres() {
+        String genreString = "";
+        for(Genre g : genres) {
+            genreString = genreString + g.toString() + "\n";
+        }
+        return genreString;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

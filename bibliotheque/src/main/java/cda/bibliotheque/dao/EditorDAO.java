@@ -35,7 +35,7 @@ public class EditorDAO {
     }
 
     public void addEditor(Editor editor){
-        String sql = "INSERT INTO editor(label, created_at) VALUES (?,?,?)";
+        String sql = "INSERT INTO editor(label, created_at) VALUES (?,?)";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, editor.getLabel());
             pstmt.setDate(2, editor.getCreated_at_Date());

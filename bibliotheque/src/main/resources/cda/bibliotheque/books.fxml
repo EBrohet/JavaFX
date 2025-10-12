@@ -14,6 +14,7 @@
           <TableColumn fx:id="colTitle" editable="false" prefWidth="75.0" text="Titre" />
           <TableColumn fx:id="colReleaseDate" prefWidth="75.0" text="Date de sortie" />
             <TableColumn fx:id="colAuthors" prefWidth="75.0" text="Auteurs" />
+            <TableColumn fx:id="colGenres" prefWidth="75.0" text="Genres" />
             <TableColumn fx:id="colIsAvailable" prefWidth="75.0" text="Disponibilité" />
             <TableColumn fx:id="colActions" prefWidth="75.0" text="Actions" />
         </columns>

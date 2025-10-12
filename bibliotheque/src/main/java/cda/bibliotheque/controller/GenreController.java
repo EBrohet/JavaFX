@@ -1,47 +1,41 @@
 package cda.bibliotheque.controller;
 
 import java.io.IOException;
+import java.util.List;
 
-import cda.bibliotheque.model.Editor;
-import cda.bibliotheque.dao.EditorDAO;
+import cda.bibliotheque.dao.GenreDAO;
+import cda.bibliotheque.model.Genre;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import cda.bibliotheque.App;
 
-import java.time.LocalDate;
-import java.sql.Date;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-
-public class EditorController {
+public class GenreController {
+    
     @FXML
-    private TableView<Editor> editorsTable;
+    private TableColumn<Genre, Void> colActions;
 
     @FXML
-    private TableColumn<Editor, LocalDate> colCreatedAt;
+    private TableColumn<Genre, String> colLabel;
 
     @FXML
-    private TableColumn<Editor, String> colLabel;
+    private TableView<Genre> genresTable;
 
-    @FXML
-    private TableColumn<Editor, Void> colActions;
-
-    private final ObservableList<Editor> editorList = FXCollections.observableArrayList();
-    private final EditorDAO editorDAO = new EditorDAO();
+    private final ObservableList<Genre> genreList = FXCollections.observableArrayList();
+    private final GenreDAO genreDAO = new GenreDAO();
 
     @FXML
     public void initialize(){
         colLabel.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getLabel()));
-        colCreatedAt.setCellValueFactory(cell -> new SimpleObjectProperty<LocalDate>(cell.getValue().getCreated_at()));
-
         colActions.setCellFactory(cell -> new TableCell<>(){
             private final Button buttonEdit = new Button("Modifier");
             private final Button buttonDelete = new Button("Supprimer");
@@ -49,13 +43,13 @@ public class EditorController {
             {
                 buttonEdit.setOnAction(event -> {
                     int index = getIndex();
-                    Editor editorToEdit = editorsTable.getItems().get(index);
+                    Genre genreToEdit = genresTable.getItems().get(index);
                     try {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("edit-editor.fxml"));
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("edit-genre.fxml"));
                         Parent parent = loader.load();
 
-                        EditEditorController editEditorController = loader.getController();
-                        editEditorController.setEditor(editorToEdit);
+                        EditGenreController editGenreController = loader.getController();
+                        editGenreController.setGenre(genreToEdit);
 
                         App.getScene().setRoot(parent);
                     } catch (IOException e) {
@@ -64,11 +58,11 @@ public class EditorController {
                 });
                 buttonDelete.setOnAction(event -> {
                     int index = getIndex();
-                    Editor editorToDelete = editorsTable.getItems().get(index);
-                    editorDAO.deleteEditor(editorToDelete.getId());
-                    loadEditors();
+                    Genre genreToDelete = genresTable.getItems().get(index);
+                    genreDAO.deleteGenre(genreToDelete.getId());
+                    loadGenres();
                 });
-            }
+            } 
 
             @Override
             protected void updateItem(Void item, boolean empty){
@@ -80,22 +74,24 @@ public class EditorController {
                 }
             }
         });
-
-        loadEditors();
-    }
-
-    private void loadEditors(){
-        editorList.setAll(editorDAO.getAllEditors());
-        editorsTable.setItems(editorList);
+        loadGenres();
+        genresTable.setItems(genreList);
     }
 
     @FXML
-    private void switchToCreate() throws IOException{
-        App.setRoot("create-editor");
+    void switchToCreate(ActionEvent event) throws IOException{
+        App.setRoot("create-genre");
     }
 
     @FXML
-    private void switchToMain() throws IOException{
+    void switchToMain(ActionEvent event) throws IOException{
         App.setRoot("primary");
+    }
+
+    private void loadGenres(){
+        List<Genre> genres = genreDAO.getAllGenre();
+        // this.
+        genreList.setAll(genres);
+        genresTable.setItems(genreList);
     }
 }

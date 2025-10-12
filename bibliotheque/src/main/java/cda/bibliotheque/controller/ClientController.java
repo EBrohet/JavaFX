@@ -62,7 +62,7 @@ public class ClientController {
 
                         App.getScene().setRoot(parent);
                     } catch (IOException e) {
-                        System.err.println("Erreur lors de la création du bouton edit ->" + e.getMessage());
+                        System.err.println("Erreur lors de la création du bouton edit -> " + e.getMessage());
                     }
                 });
                 buttonDelete.setOnAction(event -> {

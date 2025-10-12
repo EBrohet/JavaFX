@@ -25,6 +25,8 @@
          </children>
       </HBox>
       <Label layoutX="47.0" layoutY="241.0" text="Auteurs" />
-      <ListView fx:id="inputListView" layoutX="47.0" layoutY="269.0" prefHeight="54.0" prefWidth="517.0" />
+      <ListView fx:id="inputListAuthor" layoutX="47.0" layoutY="269.0" prefHeight="54.0" prefWidth="202.0" />
+      <Label layoutX="306.0" layoutY="241.0" text="Genres" />
+      <ListView fx:id="inputListGenre" layoutX="307.0" layoutY="269.0" prefHeight="54.0" prefWidth="202.0" />
    </children>
 </Pane>

@@ -49,7 +49,7 @@ public class ClientDAO {
     }
 
     public void updateClient(Client client){
-        String sql = "UPDATE author SET lastname = ?, firstname = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE client SET lastname = ?, firstname = ?, email = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, client.getLastName());
             pstmt.setString(2, client.getFirstName());

@@ -32,6 +32,9 @@ public class BookController {
     private TableColumn<Book, String> colAuthors;
 
     @FXML
+    private TableColumn<Book, String> colGenres;
+
+    @FXML
     private TableColumn<Book, Date> colReleaseDate;
 
     @FXML
@@ -49,6 +52,7 @@ public class BookController {
         colReleaseDate.setCellValueFactory(cell -> new SimpleObjectProperty<Date>(cell.getValue().getReleaseDate()));
         colIsAvailable.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().getIsAvailable()));
         colAuthors.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().toStringAuthors()));
+        colGenres.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().toStringGenres()));
 
         colActions.setCellFactory(cell -> new TableCell<>(){
             private final Button buttonEdit = new Button("Modifier");
@@ -67,7 +71,7 @@ public class BookController {
 
                         App.getScene().setRoot(parent);
                     } catch (IOException e) {
-                        System.err.println("Erreur lors de la création du bouton edit ->" + e.getMessage());
+                        System.err.println("Erreur lors de la création du bouton edit -> " + e.getMessage());
                     }
                 });
                 buttonDelete.setOnAction(event -> {
