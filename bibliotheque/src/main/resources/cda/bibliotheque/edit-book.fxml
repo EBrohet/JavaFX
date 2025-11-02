@@ -16,7 +16,7 @@
       <Label layoutX="48.0" layoutY="149.0" prefHeight="17.0" prefWidth="97.0" text="Date de sortie" />
       <DatePicker fx:id="inputReleaseDate" layoutX="48.0" layoutY="175.0" prefHeight="25.0" prefWidth="517.0" />
       <Button layoutX="42.0" layoutY="349.0" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="517.0" text="Enregistrer" />
-      <Label layoutX="259.0" layoutY="37.0" text="Création d'un livre" />
+      <Label layoutX="241.0" layoutY="41.0" text="Modification d'un livre" />
       <Button layoutX="34.0" layoutY="24.0" mnemonicParsing="false" onAction="#switchToBooks" text="Retour" />
       <HBox layoutX="47.0" layoutY="213.0" prefHeight="36.0" prefWidth="507.0">
          <children>
@@ -25,6 +25,8 @@
          </children>
       </HBox>
       <Label layoutX="47.0" layoutY="241.0" text="Auteurs" />
-      <ListView fx:id="inputListView" layoutX="47.0" layoutY="269.0" prefHeight="54.0" prefWidth="517.0" />
+      <ListView fx:id="inputListAuthor" layoutX="47.0" layoutY="269.0" prefHeight="54.0" prefWidth="209.0" />
+      <Label layoutX="319.0" layoutY="241.0" text="Genres" />
+      <ListView fx:id="inputListGenre" layoutX="319.0" layoutY="269.0" prefHeight="54.0" prefWidth="209.0" />
    </children>
 </Pane>

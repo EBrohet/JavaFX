@@ -1,13 +1,14 @@
 package cda.bibliotheque.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
     private int id;
     private String title;
-    private Date release_date;
+    private LocalDate release_date;
     private boolean isAvailable;
     private List<Author> authors = new ArrayList<>();
     private List<Genre> genres = new ArrayList<>();
@@ -18,12 +19,27 @@ public class Book {
     public Book(int id, String title, Date release_date, boolean isAvailable) {
         this.id = id;
         this.title = title;
+        this.release_date = release_date.toLocalDate();
+        this.isAvailable = isAvailable;
+    }
+
+    public Book(int id, String title, LocalDate release_date, boolean isAvailable) {
+        this.id = id;
+        this.title = title;
         this.release_date = release_date;
         this.isAvailable = isAvailable;
     }
 
-    public Book(int id, String title, Date release_date, boolean isAvailable, List<Author> authors, List<Genre> genres) {
+    public Book(int id, String title, LocalDate release_date, boolean isAvailable, List<Author> authors, List<Genre> genres) {
         this.id = id;
+        this.title = title;
+        this.release_date = release_date;
+        this.isAvailable = isAvailable;
+        this.authors = authors;
+        this.genres = genres;
+    }
+
+    public Book(String title, LocalDate release_date, boolean isAvailable, List<Author> authors, List<Genre> genres) {
         this.title = title;
         this.release_date = release_date;
         this.isAvailable = isAvailable;
@@ -39,19 +55,27 @@ public class Book {
         return title;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return release_date;
+    }
+
+    public Date getReleaseDate_Date() {
+        return Date.valueOf(release_date);
     }
 
     public boolean getIsAvailable() {
         return isAvailable;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setReleaseDate(Date release_date) {
+    public void setReleaseDate(LocalDate release_date) {
         this.release_date = release_date;
     }
 
@@ -73,6 +97,22 @@ public class Book {
             genreString = genreString + g.toString() + "\n";
         }
         return genreString;
+    }
+
+    public void setAuthors(List<Author> authors){
+        this.authors = authors;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
     }
 
     @Override

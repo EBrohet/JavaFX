@@ -9,9 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cda.bibliotheque.model.Book;
+import cda.bibliotheque.model.Author;
+import cda.bibliotheque.model.Editor;
+import cda.bibliotheque.model.Genre;
 
 public class BookDAO {
     private Connection connection;
+
+    private final WriteDAO writeDAO = new WriteDAO();
+    private final AuthorDAO authorDAO = new AuthorDAO();
+    private final GenreDAO genreDAO = new GenreDAO();
+    private final HaveDAO haveDAO = new HaveDAO();
+    private final DistributeDAO distributeDAO = new DistributeDAO();
 
     public BookDAO() {
         this.connection = DatabaseConnection.getConnection();
@@ -22,11 +31,15 @@ public class BookDAO {
         String sql = "SELECT id, title, release_date, isAvailable FROM books;";
         try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while(rs.next()){
+                List<Author> authors = authorDAO.getAuthorsByBook(rs.getInt("id"));
+                List<Genre> genres = genreDAO.getGenresByBook(rs.getInt("id"));
                 books.add(new Book(
                     rs.getInt("id"),
                     rs.getString("title"),
-                    rs.getDate("release_date"),
-                    rs.getBoolean("isAvailable")
+                    rs.getDate("release_date").toLocalDate(),
+                    rs.getBoolean("isAvailable"),
+                    authors,
+                    genres
                 ));
             }
         } catch (SQLException e) {
@@ -39,9 +52,16 @@ public class BookDAO {
         String sql = "INSERT INTO books(title, release_date, isAvailable) VALUES (?,?,?)";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
-            pstmt.setDate(2, book.getReleaseDate());
+            pstmt.setDate(2, book.getReleaseDate_Date());
             pstmt.setBoolean(3, book.getIsAvailable());
             pstmt.executeUpdate();
+            Book lastBook = getLastBookInserted();
+            for (Author author : book.getAuthors()) {
+                writeDAO.insert(author.getId(), lastBook.getId());
+            }
+            for (Genre genre : book.getGenres()) {
+                haveDAO.insert(lastBook, genre);
+            }
             System.out.println("Ajout du livre effectué");
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout dans addBook -> " + e.getMessage());
@@ -52,10 +72,18 @@ public class BookDAO {
         String sql = "UPDATE books SET title = ?, release_date = ?, isAvailable = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, book.getTitle());
-            pstmt.setDate(2, book.getReleaseDate());
+            pstmt.setDate(2, book.getReleaseDate_Date());
             pstmt.setBoolean(3, book.getIsAvailable());
             pstmt.setInt(4, book.getId());
             int rows = pstmt.executeUpdate();
+            writeDAO.deleteByBook(book.getId());
+            for(Author author : book.getAuthors()) {
+                writeDAO.insert(author.getId(), book.getId());
+            }
+            haveDAO.deleteByBook(book.getId());
+            for (Genre genre : book.getGenres()) {
+                haveDAO.insert(book, genre);
+            }
             if (rows > 0) {
                 System.out.println("Livre mis à jour");
             }else{
@@ -79,5 +107,21 @@ public class BookDAO {
         } catch (SQLException e) {
             System.err.println("Erreur lors de la suppression dans deleteBook -> " + e.getMessage());
         }
+    }
+
+    private Book getLastBookInserted(){
+        String SQL = "SELECT id, title, release_date, isAvailable FROM books ORDER BY id DESC LIMIT 1";
+        Book book = new Book();
+        try(Statement stmt = connection.createStatement(); ResultSet resultSet = stmt.executeQuery(SQL)){
+            while(resultSet.next()){
+                book.setId(resultSet.getInt("id"));
+                book.setTitle(resultSet.getString("title"));
+                book.setIsAvailable(resultSet.getBoolean("isAvailable"));
+                book.setReleaseDate(resultSet.getDate("release_date").toLocalDate());
+            }
+        }catch(SQLException e){
+            System.err.println("Erreur lors de la recupération dans getLastBookInserted -> " + e.getMessage());
+        }
+        return book;
     }
 }

@@ -61,5 +61,10 @@ public class Author {
     public void setBorn_at(LocalDate born_at) {
         this.born_at = born_at;
     }
+
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName;
+    }
 }
 

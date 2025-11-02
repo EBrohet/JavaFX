@@ -49,7 +49,7 @@ public class BookController {
     @FXML
     public void initialize(){
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
-        colReleaseDate.setCellValueFactory(cell -> new SimpleObjectProperty<Date>(cell.getValue().getReleaseDate()));
+        colReleaseDate.setCellValueFactory(cell -> new SimpleObjectProperty<Date>(cell.getValue().getReleaseDate_Date()));
         colIsAvailable.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().getIsAvailable()));
         colAuthors.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().toStringAuthors()));
         colGenres.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().toStringGenres()));
